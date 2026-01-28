@@ -1,0 +1,1296 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Courses - EKlorix</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #4ecdc4 0%, #44a08d 100%);
+            --accent-gradient: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            --gold-gradient: linear-gradient(135deg, #ffd700 0%, #ffb347 100%);
+            --success-gradient: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+            --text-dark: #1a202c;
+            --text-gray: #4a5568;
+            --text-light: #718096;
+            --bg-light: #f7fafc;
+            --bg-white: #ffffff;
+            --shadow-sm: 0 4px 6px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 20px 40px rgba(0, 0, 0, 0.15);
+            --shadow-xl: 0 25px 50px rgba(0, 0, 0, 0.25);
+            --border-radius: 12px;
+            --border-radius-lg: 20px;
+            --border-radius-xl: 30px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 1.75rem;
+            font-weight: 800;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+            transform: translateY(-1px);
+        }
+
+        .back-button {
+            background: var(--secondary-gradient);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius-xl);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .back-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Page Header */
+        .page-header {
+            padding: 8rem 0 4rem;
+            background: var(--primary-gradient);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .page-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 30% 40%, rgba(255, 255, 255, 0.1) 0%, transparent 50%);
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+
+            50% {
+                transform: translateY(-20px) rotate(1deg);
+            }
+        }
+
+        .page-header h1 {
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .page-header p {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Course Categories Navigation */
+        .category-nav {
+            padding: 2rem 0;
+            background: white;
+            border-bottom: 1px solid #e2e8f0;
+            position: sticky;
+            top: 80px;
+            z-index: 100;
+        }
+
+        .category-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .category-btn {
+            background: transparent;
+            border: 2px solid #e2e8f0;
+            color: var(--text-gray);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius-xl);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .category-btn.active,
+        .category-btn:hover {
+            background: var(--primary-gradient);
+            border-color: transparent;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Course Sections */
+        .course-section {
+            padding: 4rem 0;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .course-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .course-section:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            font-size: clamp(1rem, 2vw, 1.2rem);
+            color: var(--text-gray);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* Short Term Courses */
+        .short-term-courses {
+            background: linear-gradient(135deg, #f8fafc 0%, #e8f5e8 100%);
+        }
+
+        .short-term-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .short-course-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-sm);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border-left: 4px solid #56ab2f;
+        }
+
+        .short-course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .course-duration {
+            background: var(--success-gradient);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: var(--border-radius);
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .course-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.75rem;
+        }
+
+        .course-description {
+            color: var(--text-gray);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .course-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-tag {
+            background: rgba(86, 171, 47, 0.1);
+            color: #56ab2f;
+            padding: 0.3rem 0.6rem;
+            border-radius: var(--border-radius);
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .course-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .course-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        .enroll-btn {
+            background: var(--success-gradient);
+            color: white;
+            padding: 0.6rem 1.2rem;
+            border-radius: var(--border-radius);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+        }
+
+        .enroll-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Placement Oriented Courses */
+        .placement-courses {
+            background: linear-gradient(135deg, #f0f8ff 0%, #e6f3ff 100%);
+        }
+
+        .placement-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .placement-course-card {
+            background: white;
+            border-radius: var(--border-radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            position: relative;
+            border: 2px solid transparent;
+        }
+
+        .placement-course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-xl);
+            border-color: #667eea;
+        }
+
+        .placement-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent-gradient);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-lg);
+            font-size: 0.75rem;
+            font-weight: 700;
+            z-index: 10;
+        }
+
+        .course-header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .course-header h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-subtitle {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .course-content {
+            padding: 2rem;
+        }
+
+        .placement-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: var(--border-radius);
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 0.25rem;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+            font-weight: 500;
+        }
+
+        .subscription-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .subscription-plan {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            text-align: center;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 2px solid transparent;
+        }
+
+        .subscription-plan:hover,
+        .subscription-plan.popular {
+            border-color: #667eea;
+            background: rgba(102, 126, 234, 0.05);
+        }
+
+        .plan-name {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .plan-price {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 0.25rem;
+        }
+
+        .plan-duration {
+            font-size: 0.8rem;
+            color: var(--text-gray);
+        }
+
+        .popular-tag {
+            background: var(--gold-gradient);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            position: absolute;
+            top: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        /* Government Job Courses */
+        .government-courses {
+            background: linear-gradient(135deg, #fff8dc 0%, #faf0e6 100%);
+        }
+
+        .government-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .government-course-card {
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius-lg);
+            box-shadow: var(--shadow-md);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border-top: 5px solid #ffd700;
+        }
+
+        .government-course-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .government-badge {
+            background: var(--gold-gradient);
+            color: white;
+            padding: 0.4rem 0.8rem;
+            border-radius: var(--border-radius);
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .exam-info {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            margin-bottom: 1.5rem;
+            border-left: 3px solid #ffd700;
+        }
+
+        .exam-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+        }
+
+        .exam-details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        .success-rate {
+            background: var(--success-gradient);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: var(--border-radius-lg);
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .success-rate strong {
+            font-size: 1.2rem;
+            display: block;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .category-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .category-btn {
+                width: 100%;
+                max-width: 300px;
+                text-align: center;
+            }
+
+            .short-term-grid,
+            .placement-grid,
+            .government-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .placement-stats {
+                grid-template-columns: 1fr;
+            }
+
+            .subscription-options {
+                grid-template-columns: 1fr;
+            }
+
+            .exam-details {
+                grid-template-columns: 1fr;
+            }
+
+            .course-section {
+                padding: 3rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .page-header {
+                padding: 6rem 0 3rem;
+            }
+
+            .short-course-card,
+            .placement-course-card .course-content,
+            .government-course-card {
+                padding: 1.5rem;
+            }
+        }
+
+        /* Loading and Animation States */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Smooth scrolling enhancement */
+        html {
+            scroll-padding-top: 140px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">EKlorix</a>
+            <ul class="nav-links">
+                <li><a href="index.html#home">Home</a></li>
+                <li><a href="index.html#services">Services</a></li>
+                <li><a href="#short-term">Short Courses</a></li>
+                <li><a href="#placement">Placement Courses</a></li>
+                <li><a href="#government">Government Jobs</a></li>
+            </ul>
+            <a href="index.html" class="back-button">← Back to Home</a>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Explore All Courses</h1>
+            <p>Discover the perfect learning path for your career goals with our comprehensive range of courses designed
+                for every aspiration</p>
+        </div>
+    </section>
+
+    <!-- Category Navigation -->
+    <section class="category-nav">
+        <div class="container">
+            <div class="category-buttons">
+                <a href="#short-term" class="category-btn active">Short Term Courses</a>
+                <a href="#placement" class="category-btn">Placement Oriented</a>
+                <a href="#government" class="category-btn">Government Jobs</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Short Term Courses Section -->
+    <section class="course-section short-term-courses fade-in" id="short-term">
+        <div class="container">
+            <div class="section-header">
+                <h2>Short Term Skill Courses</h2>
+                <p>Quick, focused courses designed to help you master specific skills and boost your career in just a
+                    few weeks. Perfect for working professionals and students looking to upskill rapidly.</p>
+            </div>
+            <div class="short-term-grid">
+                <div class="short-course-card">
+                    <div class="course-duration">4 Weeks</div>
+                    <h3 class="course-title">Python Fundamentals</h3>
+                    <p class="course-description">Master Python programming basics, data structures, and object-oriented
+                        programming. Build real projects and automate tasks.</p>
+                    <div class="course-features">
+                        <span class="feature-tag">Hands-on Projects</span>
+                        <span class="feature-tag">Live Sessions</span>
+                        <span class="feature-tag">Certificate</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-price">₹4,999</div>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScNPz7UEx1xy-z_PB1MEICQ3zEvJn0riYzk4bA666z-3iD_Fw/viewform?usp=dialog"
+                        target="_blank" class="enroll-btn">Enroll Now</a>
+                    </div>
+                </div>
+
+                <div class="short-course-card">
+                    <div class="course-duration">6 Weeks</div>
+                    <h3 class="course-title">Digital Marketing Essentials</h3>
+                    <p class="course-description">Learn SEO, social media marketing, Google Ads, and content marketing
+                        strategies to grow businesses online.</p>
+                    <div class="course-features">
+                        <span class="feature-tag">Google Certified</span>
+                        <span class="feature-tag">Case Studies</span>
+                        <span class="feature-tag">Tools Access</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-price">₹6,999</div>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLScNPz7UEx1xy-z_PB1MEICQ3zEvJn0riYzk4bA666z-3iD_Fw/viewform?usp=dialog"
+                            target="_blank" class="enroll-btn">Enroll Now</a>
+                    </div>
+                </div>
+
+                <div class="short-course-card">
+                    <div class="course-duration">5 Weeks</div>
+                    <h3 class="course-title">Excel & Data Analysis</h3>
+                    <p class="course-description">Advanced Excel techniques, pivot tables, data visualization, and basic
+                        statistics for business analytics.</p>
+                    <div class="course-features">
+                        <span class="feature-tag">Advanced Formulas</span>
+                        <span class="feature-tag">Dashboard Creation</span>
+                        <span class="feature-tag">Business Cases</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-price">₹3,999</div>
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLScNPz7UEx1xy-z_PB1MEICQ3zEvJn0riYzk4bA666z-3iD_Fw/viewform?usp=dialog"
+                    target="_blank" class="enroll-btn">Enroll Now</a>
+                    </div>
+                </div>
+
+                <div class="short-course-card">
+                    <div class="course-duration">3 Weeks</div>
+                    <h3 class="course-title">UI/UX Design Basics</h3>
+                    <p class="course-description">Learn design principles, wireframing, prototyping using Figma, and
+                        create stunning user interfaces.</p>
+                    <div class="course-features">
+                        <span class="feature-tag">Figma Mastery</span>
+                        <span class="feature-tag">Portfolio Projects</span>
+                        <span class="feature-tag">Design Systems</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-price">₹5,499</div>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScNPz7UEx1xy-z_PB1MEICQ3zEvJn0riYzk4bA666z-3iD_Fw/viewform?usp=dialog"
+                        target="_blank" class="enroll-btn">Enroll Now</a>
+                    </div>
+                </div>
+
+                <div class="short-course-card">
+                    <div class="course-duration">4 Weeks</div>
+                    <h3 class="course-title">Power BI for Beginners</h3>
+                    <p class="course-description">Create interactive dashboards, connect data sources, and build
+                        compelling visualizations for business intelligence.</p>
+                    <div class="course-features">
+                        <span class="feature-tag">Dashboard Design</span>
+                        <span class="feature-tag">Data Modeling</span>
+                        <span class="feature-tag">DAX Functions</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-price">₹4,499</div>
+                        <a href="https://docs.google.com/forms/d/e/1FAIpQLScNPz7UEx1xy-z_PB1MEICQ3zEvJn0riYzk4bA666z-3iD_Fw/viewform?usp=dialog"
+                            target="_blank" class="enroll-btn">Enroll Now</a>
+                    </div>
+                </div>
+
+                <div class="short-course-card">
+                    <div class="course-duration">6 Weeks</div>
+                    <h3 class="course-title">AWS Cloud Basics</h3>
+                    <p class="course-description">Introduction to cloud computing, AWS services, EC2, S3, and basic
+                        cloud architecture concepts.</p>
+                    <div class="course-features">
+                        <span class="feature-tag">Hands-on Labs</span>
+                        <span class="feature-tag">Free Tier Usage</span>
+                        <span class="feature-tag">Certification Prep</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-price">₹7,999</div>
+                    <a href="https://docs.google.com/forms/d/e/1FAIpQLScNPz7UEx1xy-z_PB1MEICQ3zEvJn0riYzk4bA666z-3iD_Fw/viewform?usp=dialog"
+                        target="_blank" class="enroll-btn">Enroll Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Placement Oriented Courses Section -->
+    <section class="course-section placement-courses fade-in" id="placement">
+        <div class="container">
+            <div class="section-header">
+                <h2>Placement-Oriented Subscription Programs</h2>
+                <p>Comprehensive career transformation programs with guaranteed placement assistance, personalized
+                    mentorship, and industry-aligned curriculum. Choose your subscription plan based on your learning
+                    pace and career goals.</p>
+            </div>
+            <div class="placement-grid">
+                <div class="placement-course-card">
+                    <div class="placement-badge">100% Placement Assistance</div>
+                    <div class="course-header">
+                        <h3>Full Stack Web Development</h3>
+                        <p class="course-subtitle">MERN Stack + DevOps + System Design</p>
+                    </div>
+                    <div class="course-content">
+                        <div class="placement-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">95%</div>
+                                <div class="stat-label">Placement Rate</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">₹8L</div>
+                                <div class="stat-label">Avg Package</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">200+</div>
+                                <div class="stat-label">Hiring Partners</div>
+                            </div>
+                        </div>
+                        <div class="course-description">
+                            Complete full-stack development with React, Node.js, MongoDB, AWS deployment, system design,
+                            and interview preparation.
+                        </div>
+                        <div class="subscription-options">
+                            <div class="subscription-plan">
+                                <div class="plan-name">Basic</div>
+                                <div class="plan-price">₹2,499</div>
+                                <div class="plan-duration">per month</div>
+                            </div>
+                            <div class="subscription-plan popular">
+                                <div class="popular-tag">Most Popular</div>
+                                <div class="plan-name">Standard</div>
+                                <div class="plan-price">₹1,999</div>
+                                <div class="plan-duration">per month</div>
+                            </div>
+                            <div class="subscription-plan">
+                                <div class="plan-name">Premium</div>
+                                <div class="plan-price">₹19,999</div>
+                                <div class="plan-duration">one-time</div>
+                            </div>
+                        </div>
+                        <button class="enroll-btn" style="width: 100%; padding: 1rem; font-size: 1rem;">Start Free
+                            Trial</button>
+                    </div>
+                </div>
+
+                <div class="placement-course-card">
+                    <div class="placement-badge">Guaranteed Placement</div>
+                    <div class="course-header">
+                        <h3>Data Science & AI</h3>
+                        <p class="course-subtitle">Python + ML + Deep Learning + MLOps</p>
+                    </div>
+                    <div class="course-content">
+                        <div class="placement-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">92%</div>
+                                <div class="stat-label">Placement Rate</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">₹12L</div>
+                                <div class="stat-label">Avg Package</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">150+</div>
+                                <div class="stat-label">AI Companies</div>
+                            </div>
+                        </div>
+                        <div class="course-description">
+                            Comprehensive data science program covering statistics, machine learning, deep learning, and
+                            production deployment.
+                        </div>
+                        <div class="subscription-options">
+                            <div class="subscription-plan">
+                                <div class="plan-name">Basic</div>
+                                <div class="plan-price">₹2,999</div>
+                                <div class="plan-duration">per month</div>
+                            </div>
+                            <div class="subscription-plan popular">
+                                <div class="popular-tag">Recommended</div>
+                                <div class="plan-name">Standard</div>
+                                <div class="plan-price">₹2,499</div>
+                                <div class="plan-duration">per month</div>
+                            </div>
+                            <div class="subscription-plan">
+                                <div class="plan-name">Premium</div>
+                                <div class="plan-price">₹24,999</div>
+                                <div class="plan-duration">one-time</div>
+                            </div>
+                        </div>
+                        <button class="enroll-btn" style="width: 100%; padding: 1rem; font-size: 1rem;">Start Free
+                            Trial</button>
+                    </div>
+                </div>
+
+                <div class="placement-course-card">
+                    <div class="placement-badge">Industry Certified</div>
+                    <div class="course-header">
+                        <h3>Cloud DevOps Engineer</h3>
+                        <p class="course-subtitle">AWS + Azure + Kubernetes + CI/CD</p>
+                    </div>
+                    <div class="course-content">
+                        <div class="placement-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">90%</div>
+                                <div class="stat-label">Placement Rate</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">₹10L</div>
+                                <div class="stat-label">Avg Package</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">100+</div>
+                                <div class="stat-label">Cloud Companies</div>
+                            </div>
+                        </div>
+                        <div class="course-description">
+                            Master cloud infrastructure, containerization, automation, and deployment pipelines for
+                            modern applications.
+                        </div>
+                        <div class="subscription-options">
+                            <div class="subscription-plan">
+                                <div class="plan-name">Basic</div>
+                                <div class="plan-price">₹2,299</div>
+                                <div class="plan-duration">per month</div>
+                            </div>
+                            <div class="subscription-plan popular">
+                                <div class="popular-tag">Best Value</div>
+                                <div class="plan-name">Standard</div>
+                                <div class="plan-price">₹1,899</div>
+                                <div class="plan-duration">per month</div>
+                            </div>
+                            <div class="subscription-plan">
+                                <div class="plan-name">Premium</div>
+                                <div class="plan-price">₹18,999</div>
+                                <div class="plan-duration">one-time</div>
+                            </div>
+                        </div>
+                        <button class="enroll-btn" style="width: 100%; padding: 1rem; font-size: 1rem;">Start Free
+                            Trial</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Government Job Courses Section -->
+    <section class="course-section government-courses fade-in" id="government">
+        <div class="container">
+            <div class="section-header">
+                <h2>Government Job Preparation Courses</h2>
+                <p>Comprehensive preparation programs for various government examinations with expert guidance, updated
+                    syllabus, and proven success strategies. Achieve your dream of serving the nation.</p>
+            </div>
+            <div class="government-grid">
+                <div class="government-course-card">
+                    <div class="government-badge">UPSC Preparation</div>
+                    <h3 class="course-title">Civil Services Examination</h3>
+                    <div class="exam-info">
+                        <div class="exam-title">UPSC CSE 2025-26</div>
+                        <div class="exam-details">
+                            <span><strong>Prelims:</strong> May 2025</span>
+                            <span><strong>Mains:</strong> Sept 2025</span>
+                            <span><strong>Vacancies:</strong> 1000+ posts</span>
+                            <span><strong>Age Limit:</strong> 21-32 years</span>
+                        </div>
+                    </div>
+                    <div class="course-description">
+                        Complete IAS preparation with current affairs, essay writing, interview guidance, and optional
+                        subject coaching.
+                    </div>
+                    <div class="success-rate">
+                        <strong>78% Success Rate</strong>
+                        <span>in Previous Batches</span>
+                    </div>
+                    <div class="course-features">
+                        <span class="feature-tag">Daily Current Affairs</span>
+                        <span class="feature-tag">Mock Tests</span>
+                        <span class="feature-tag">Personal Mentoring</span>
+                        <span class="feature-tag">Interview Training</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-price">₹45,999</div>
+                        <button class="enroll-btn">Join Batch</button>
+                    </div>
+                </div>
+
+                <div class="government-course-card">
+                    <div class="government-badge">SSC Preparation</div>
+                    <h3 class="course-title">SSC CGL & CHSL</h3>
+                    <div class="exam-info">
+                        <div class="exam-title">Staff Selection Commission</div>
+                        <div class="exam-details">
+                            <span><strong>CGL Tier-1:</strong> June 2025</span>
+                            <span><strong>CHSL:</strong> July 2025</span>
+                            <span><strong>Vacancies:</strong> 15,000+ posts</span>
+                            <span><strong>Age Limit:</strong> 18-32 years</span>
+                        </div>
+                    </div>
+                    <div class="course-description">
+                        Comprehensive preparation for SSC exams covering quantitative aptitude, reasoning, English, and
+                        general awareness.
+                    </div>
+                    <div class="success-rate">
+                        <strong>85% Success Rate</strong>
+                        <span>in SSC Examinations</span>
+                    </div>
+                    <div class="course-features">
+                        <span class="feature-tag">Speed Building</span>
+                        <span class="feature-tag">Shortcut Techniques</span>
+                        <span class="feature-tag">Previous Papers</span>
+                        <span class="feature-tag">Tier-2 Preparation</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-price">₹15,999</div>
+                        <button class="enroll-btn">Join Batch</button>
+                    </div>
+                </div>
+
+                <div class="government-course-card">
+                    <div class="government-badge">Banking Preparation</div>
+                    <h3 class="course-title">Bank PO & Clerk</h3>
+                    <div class="exam-info">
+                        <div class="exam-title">IBPS, SBI, RBI Exams</div>
+                        <div class="exam-details">
+                            <span><strong>IBPS PO:</strong> August 2025</span>
+                            <span><strong>SBI PO:</strong> December 2025</span>
+                            <span><strong>Vacancies:</strong> 8,000+ posts</span>
+                            <span><strong>Age Limit:</strong> 20-30 years</span>
+                        </div>
+                    </div>
+                    <div class="course-description">
+                        Banking exam preparation with focus on quantitative aptitude, reasoning, English language, and
+                        banking awareness.
+                    </div>
+                    <div class="success-rate">
+                        <strong>82% Success Rate</strong>
+                        <span>in Banking Exams</span>
+                    </div>
+                    <div class="course-features">
+                        <span class="feature-tag">Banking Awareness</span>
+                        <span class="feature-tag">Interview Skills</span>
+                        <span class="feature-tag">Group Discussion</span>
+                        <span class="feature-tag">Personality Test</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-price">₹12,999</div>
+                        <button class="enroll-btn">Join Batch</button>
+                    </div>
+                </div>
+
+                <div class="government-course-card">
+                    <div class="government-badge">Defence Preparation</div>
+                    <h3 class="course-title">NDA & CDS</h3>
+                    <div class="exam-info">
+                        <div class="exam-title">National Defence Academy</div>
+                        <div class="exam-details">
+                            <span><strong>NDA-I:</strong> April 2025</span>
+                            <span><strong>CDS-I:</strong> February 2025</span>
+                            <span><strong>Vacancies:</strong> 400+ posts</span>
+                            <span><strong>Age Limit:</strong> 16-20 years</span>
+                        </div>
+                    </div>
+                    <div class="course-description">
+                        Complete defence exam preparation including mathematics, general ability test, and personality
+                        development.
+                    </div>
+                    <div class="success-rate">
+                        <strong>73% Success Rate</strong>
+                        <span>in Defence Exams</span>
+                    </div>
+                    <div class="course-features">
+                        <span class="feature-tag">Physical Training</span>
+                        <span class="feature-tag">SSB Interview</span>
+                        <span class="feature-tag">Medical Guidance</span>
+                        <span class="feature-tag">Personality Test</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-price">₹18,999</div>
+                        <button class="enroll-btn">Join Batch</button>
+                    </div>
+                </div>
+
+                <div class="government-course-card">
+                    <div class="government-badge">Railway Preparation</div>
+                    <h3 class="course-title">Railway RRB</h3>
+                    <div class="exam-info">
+                        <div class="exam-title">Railway Recruitment Board</div>
+                        <div class="exam-details">
+                            <span><strong>NTPC:</strong> March 2025</span>
+                            <span><strong>Group D:</strong> May 2025</span>
+                            <span><strong>Vacancies:</strong> 35,000+ posts</span>
+                            <span><strong>Age Limit:</strong> 18-33 years</span>
+                        </div>
+                    </div>
+                    <div class="course-description">
+                        Railway exam preparation covering mathematics, general intelligence, general science, and
+                        general awareness.
+                    </div>
+                    <div class="success-rate">
+                        <strong>88% Success Rate</strong>
+                        <span>in Railway Exams</span>
+                    </div>
+                    <div class="course-features">
+                        <span class="feature-tag">CBT Preparation</span>
+                        <span class="feature-tag">Technical Training</span>
+                        <span class="feature-tag">Medical Standards</span>
+                        <span class="feature-tag">Document Verification</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-price">₹9,999</div>
+                        <button class="enroll-btn">Join Batch</button>
+                    </div>
+                </div>
+
+                <div class="government-course-card">
+                    <div class="government-badge">State PSC</div>
+                    <h3 class="course-title">State Public Service Commission</h3>
+                    <div class="exam-info">
+                        <div class="exam-title">JPSC, BPSC, UPPSC & Others</div>
+                        <div class="exam-details">
+                            <span><strong>JPSC:</strong> June 2025</span>
+                            <span><strong>BPSC:</strong> September 2025</span>
+                            <span><strong>Vacancies:</strong> 5,000+ posts</span>
+                            <span><strong>Age Limit:</strong> 21-40 years</span>
+                        </div>
+                    </div>
+                    <div class="course-description">
+                        State-specific preparation for PSC examinations with local current affairs, history, and
+                        administrative knowledge.
+                    </div>
+                    <div class="success-rate">
+                        <strong>75% Success Rate</strong>
+                        <span>in State PSC Exams</span>
+                    </div>
+                    <div class="course-features">
+                        <span class="feature-tag">State-specific Syllabus</span>
+                        <span class="feature-tag">Local Current Affairs</span>
+                        <span class="feature-tag">Regional Language</span>
+                        <span class="feature-tag">State History</span>
+                    </div>
+                    <div class="course-footer">
+                        <div class="course-price">₹22,999</div>
+                        <button class="enroll-btn">Join Batch</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section style="padding: 4rem 0; background: var(--primary-gradient); color: white; text-align: center;">
+        <div class="container">
+            <h2 style="font-size: 2.5rem; margin-bottom: 1rem;">Ready to Start Your Learning Journey?</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem; opacity: 0.9;">Choose the perfect course for your career
+                goals and join thousands of successful students</p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="#short-term"
+                    style="background: white; color: #667eea; padding: 1rem 2rem; border-radius: 30px; text-decoration: none; font-weight: 600; transition: var(--transition);">Explore
+                    Short Courses</a>
+                <a href="#placement"
+                    style="background: rgba(255,255,255,0.2); color: white; padding: 1rem 2rem; border-radius: 30px; text-decoration: none; font-weight: 600; border: 2px solid rgba(255,255,255,0.3); transition: var(--transition);">Start
+                    Career Program</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background: #1a202c; color: white; padding: 4rem 0 2rem;">
+        <div class="container">
+            <div
+                style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 3rem; margin-bottom: 3rem;">
+                <div>
+                    <h3 style="font-size: 1.2rem; margin-bottom: 1.5rem; color: #667eea;">EKlorix</h3>
+                    <p style="color: #a0aec0; line-height: 1.8;">Your trusted partner in education and career
+                        transformation. Join thousands of successful students worldwide.</p>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.2rem; margin-bottom: 1.5rem; color: #667eea;">Course Categories</h3>
+                    <p><a href="#short-term" style="color: #a0aec0; text-decoration: none;">Short Term Courses</a></p>
+                    <p><a href="#placement" style="color: #a0aec0; text-decoration: none;">Placement Programs</a></p>
+                    <p><a href="#government" style="color: #a0aec0; text-decoration: none;">Government Jobs</a></p>
+                </div>
+                <div>
+                    <h3 style="font-size: 1.2rem; margin-bottom: 1.5rem; color: #667eea;">Support</h3>
+                    <p style="color: #a0aec0;">📞 +91-XXX-XXX-XXXX</p>
+                    <p style="color: #a0aec0;">✉️ courses@educareerpro.com</p>
+                    <p style="color: #a0aec0;">💬 24/7 Student Support</p>
+                </div>
+            </div>
+            <div style="border-top: 1px solid #2d3748; padding-top: 2rem; text-align: center; color: #a0aec0;">
+                <p>&copy; 2025 EKlorix. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const offsetTop = target.offsetTop - 140;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Category button active state
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const sections = document.querySelectorAll('.course-section');
+
+        function updateActiveButton() {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            sections.forEach((section, index) => {
+                const offsetTop = section.offsetTop - 200;
+                const offsetBottom = offsetTop + section.offsetHeight;
+
+                if (scrollTop >= offsetTop && scrollTop < offsetBottom) {
+                    categoryButtons.forEach(btn => btn.classList.remove('active'));
+                    categoryButtons[index].classList.add('active');
+                }
+            });
+        }
+
+        window.addEventListener('scroll', updateActiveButton);
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Enhanced hover effects for course cards
+        document.querySelectorAll('.short-course-card, .placement-course-card, .government-course-card').forEach(card => {
+            card.addEventListener('mouseenter', function () {
+                this.style.transform = 'translateY(-8px) scale(1.02)';
+                this.style.zIndex = '10';
+            });
+
+            card.addEventListener('mouseleave', function () {
+                this.style.transform = 'translateY(0) scale(1)';
+                this.style.zIndex = '1';
+            });
+        });
+
+        // Subscription plan selection
+        document.querySelectorAll('.subscription-plan').forEach(plan => {
+            plan.addEventListener('click', function () {
+                const parentCard = this.closest('.placement-course-card');
+                parentCard.querySelectorAll('.subscription-plan').forEach(p => p.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        // Enhanced navbar behavior
+        let lastScrollTop = 0;
+        const navbar = document.getElementById('navbar');
+
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+            if (scrollTop > 100) {
+                navbar.style.background = 'rgba(255, 255, 255, 0.98)';
+                navbar.style.boxShadow = '0 4px 20px rgba(0, 0, 0, 0.08)';
+            } else {
+                navbar.style.background = 'rgba(255, 255, 255, 0.95)';
+                navbar.style.boxShadow = 'none';
+            }
+
+            lastScrollTop = scrollTop;
+        });
+
+        // Add loading state
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+        });
+    </script>
+</body>
+
+</html>

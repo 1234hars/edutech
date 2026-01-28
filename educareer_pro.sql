@@ -1,0 +1,30 @@
+CREATE DATABASE educareer_pro;
+USE educareer_pro;
+
+CREATE TABLE users (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    full_name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    mobile VARCHAR(15) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    email_verified TINYINT(1) DEFAULT 0,
+    mobile_verified TINYINT(1) DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE password_resets (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(100) NOT NULL,
+    token VARCHAR(255) NOT NULL,
+    otp VARCHAR(10) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE login_attempts (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    email VARCHAR(100) NOT NULL,
+    attempt_count INT DEFAULT 1,
+    last_attempt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    locked_until TIMESTAMP NULL
+);

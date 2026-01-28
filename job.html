@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EKlorix Job Portal | Global Career Support</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* EKlorix Corporate Palette */
+            --ek-primary: #1e293b;
+            /* Deep Slate */
+            --ek-accent: #2563eb;
+            /* Trust Blue */
+            --ek-success: #059669;
+            --ek-bg: #f8fafc;
+            --ek-border: #e2e8f0;
+            --white: #ffffff;
+            --radius: 0.5rem;
+            --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--ek-bg);
+            color: var(--ek-primary);
+            line-height: 1.6;
+        }
+
+        /* Formal Navigation */
+        .navbar {
+            background: var(--white);
+            border-bottom: 1px solid var(--ek-border);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        .nav-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.4rem;
+            color: var(--ek-primary);
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--ek-accent);
+        }
+
+        /* Professional Hero Area */
+        .hero {
+            background: #ffffff;
+            border-bottom: 1px solid var(--ek-border);
+            padding: 4rem 0 6rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.25rem;
+            font-weight: 800;
+            color: #0f172a;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            color: #64748b;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Enterprise Search Bar */
+        .search-container {
+            margin-top: -2.5rem;
+        }
+
+        .search-box {
+            background: var(--white);
+            padding: 1.25rem;
+            border-radius: var(--radius);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--ek-border);
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr auto;
+            gap: 0.75rem;
+        }
+
+        input,
+        select {
+            padding: 0.6rem 1rem;
+            border: 1px solid var(--ek-border);
+            border-radius: 4px;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: var(--ek-accent);
+        }
+
+        .btn-search {
+            background: var(--ek-accent);
+            color: white;
+            border: none;
+            padding: 0 1.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.2s;
+        }
+
+        .btn-search:hover {
+            opacity: 0.9;
+        }
+
+        /* Job List Styling */
+        .results-header {
+            margin: 3rem 0 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--ek-border);
+            padding-bottom: 0.5rem;
+        }
+
+        .job-card {
+            background: var(--white);
+            border: 1px solid var(--ek-border);
+            margin-bottom: 1rem;
+            padding: 1.5rem;
+            border-radius: var(--radius);
+            transition: all 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .job-card:hover {
+            border-color: var(--ek-accent);
+            box-shadow: var(--shadow);
+        }
+
+        .job-info h3 {
+            font-size: 1.1rem;
+            color: #1e293b;
+            margin-bottom: 0.25rem;
+        }
+
+        .company {
+            font-weight: 600;
+            color: var(--ek-accent);
+            font-size: 0.95rem;
+        }
+
+        .meta-tags {
+            display: flex;
+            gap: 1rem;
+            margin-top: 0.75rem;
+            font-size: 0.85rem;
+            color: #64748b;
+        }
+
+        .badge {
+            background: #f1f5f9;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+        }
+
+        .apply-section {
+            text-align: right;
+        }
+
+        .salary {
+            color: var(--ek-success);
+            font-weight: 700;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Loader */
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 3rem;
+        }
+
+        .spinner {
+            width: 24px;
+            height: 24px;
+            border: 3px solid #e2e8f0;
+            border-top-color: var(--ek-accent);
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin: 0 auto;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .search-box {
+                grid-template-columns: 1fr;
+            }
+
+            .job-card {
+                flex-direction: column;
+            }
+
+            .apply-section {
+                text-align: left;
+                margin-top: 1rem;
+                width: 100%;
+                border-top: 1px solid #f1f5f9;
+                padding-top: 1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="container nav-content">
+            <a href="#" class="logo">EK<span>lorix</span> JOB SUPPORT</a>
+            <div id="savedBadge" style="font-size: 0.8rem; font-weight: 600;">SAVED ROLES: 0</div>
+        </div>
+    </nav>
+
+    <header class="hero">
+        <div class="container">
+            <h1>Find Your Next Career Move</h1>
+            <p>Expertly aggregating live opportunities from JSearch, Adzuna, LinkedIn, and Indeed to provide
+                comprehensive recruitment support.</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="search-container">
+            <form id="searchForm" class="search-box">
+                <input type="text" id="keywords" placeholder="Job Title (e.g. Senior Developer)" required>
+                <select id="loc">
+                    <option value="in">India</option>
+                    <option value="us">USA</option>
+                    <option value="gb">UK</option>
+                </select>
+                <select id="type">
+                    <option value="fulltime">Full-time</option>
+                    <option value="remote">Remote</option>
+                </select>
+                <button type="submit" class="btn-search">Search Portal</button>
+            </form>
+        </section>
+
+        <div id="loader" class="loading">
+            <div class="spinner"></div>
+            <p style="margin-top: 0.5rem; font-size: 0.9rem; color: #64748b;">Connecting to global job servers...</p>
+        </div>
+
+        <div class="results-header">
+            <h2 id="resultTitle" style="font-size: 1rem; text-transform: uppercase; color: #64748b;">Live Opportunities
+            </h2>
+            <span id="jobCount" style="font-size: 0.85rem; font-weight: 600;">0 Results found</span>
+        </div>
+
+        <section id="jobList">
+        </section>
+    </main>
+
+    <script>
+        class EKlorixPortal {
+            constructor() {
+                this.form = document.getElementById('searchForm');
+                this.list = document.getElementById('jobList');
+                this.loader = document.getElementById('loader');
+                this.saved = JSON.parse(localStorage.getItem('ek_saved')) || [];
+
+                this.init();
+            }
+
+            init() {
+                this.form.addEventListener('submit', (e) => this.handleSearch(e));
+                this.updateSavedUI();
+                this.performSearch('Software Engineer', 'in'); // Default search
+            }
+
+            async handleSearch(e) {
+                e.preventDefault();
+                this.performSearch(
+                    document.getElementById('keywords').value,
+                    document.getElementById('loc').value
+                );
+            }
+
+            async performSearch(keyword, location) {
+                this.list.innerHTML = '';
+                this.loader.style.display = 'block';
+
+                try {
+                    // In a production environment, fetch() calls your EKlorix backend
+                    await new Promise(r => setTimeout(r, 1000));
+
+                    const mockData = [
+                        { id: 1, title: `Lead ${keyword}`, company: 'TCS', salary: '₹24L - ₹40L', loc: 'Bangalore, IN', api: 'JSearch' },
+                        { id: 2, title: `Senior ${keyword}`, company: 'Google', salary: '₹60L+', loc: 'Hyderabad, IN', api: 'Indeed' },
+                        { id: 3, title: `${keyword} II`, company: 'Microsoft', salary: 'Market Standard', loc: 'Remote', api: 'LinkedIn' },
+                        { id: 4, title: `Associate ${keyword}`, company: 'Infosys', salary: '₹8L - ₹15L', loc: 'Pune, IN', api: 'Adzuna' }
+                    ];
+
+                    this.render(mockData);
+                } finally {
+                    this.loader.style.display = 'none';
+                }
+            }
+
+            render(jobs) {
+                document.getElementById('jobCount').innerText = `${jobs.length} Results found`;
+                this.list.innerHTML = jobs.map(job => `
+                <div class="job-card">
+                    <div class="job-info">
+                        <span class="badge">${job.api}</span>
+                        <h3>${job.title}</h3>
+                        <p class="company">${job.company}</p>
+                        <div class="meta-tags">
+                            <span>📍 ${job.loc}</span>
+                            <span>📅 Just Posted</span>
+                        </div>
+                    </div>
+                    <div class="apply-section">
+                        <span class="salary">${job.salary}</span>
+                        <button class="btn-search" style="padding: 0.5rem 1rem; font-size: 0.8rem;" 
+                                onclick="ekApp.saveRole(${job.id})">Save Role</button>
+                        <button class="btn-search" style="padding: 0.5rem 1rem; font-size: 0.8rem; background: #0f172a;"
+                                onclick="window.open('#', '_blank')">Apply</button>
+                    </div>
+                </div>
+            `).join('');
+            }
+
+            saveRole(id) {
+                if (!this.saved.includes(id)) {
+                    this.saved.push(id);
+                    localStorage.setItem('ek_saved', JSON.stringify(this.saved));
+                    this.updateSavedUI();
+                    alert("Position saved to your EKlorix profile.");
+                }
+            }
+
+            updateSavedUI() {
+                document.getElementById('savedBadge').innerText = `SAVED ROLES: ${this.saved.length}`;
+            }
+        }
+
+        const ekApp = new EKlorixPortal();
+    </script>
+
+</body>
+
+</html>
