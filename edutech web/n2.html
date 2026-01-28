@@ -1,0 +1,1825 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EduCareer Pro - Education Technology & Job Consultancy</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            --primary-green: #033b05;
+            --light-green: #0a5d0c;
+            --accent-green: #0d7e0f;
+            --bright-green: #10a013;
+            --glow-green: #1eff20;
+            --dark-green: #011501;
+            --text-light: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.8);
+            --text-muted: rgba(255, 255, 255, 0.6);
+            --glass-bg: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+
+            /* 3D Effects */
+            --shadow-3d: 0 20px 40px rgba(3, 59, 5, 0.3);
+            --shadow-glow: 0 0 30px rgba(16, 160, 19, 0.4);
+            --shadow-text: 0 2px 10px rgba(3, 59, 5, 0.5);
+
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, #033b05 0%, #0a5d0c 50%, #10a013 100%);
+            --gradient-secondary: linear-gradient(135deg, #0d7e0f 0%, #1eff20 100%);
+            --gradient-glass: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+
+            /* Animation Properties */
+            --transition-smooth: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-bounce: all 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--text-light);
+            background: var(--primary-green);
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+            position: relative;
+        }
+
+        /* Background 3D Effects */
+        .bg-3d-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background:
+                linear-gradient(rgba(16, 160, 19, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16, 160, 19, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -2;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(50px, 50px);
+            }
+        }
+
+        .floating-orbs {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--glow-green) 0%, transparent 70%);
+            opacity: 0.1;
+            filter: blur(1px);
+        }
+
+        /* Enhanced Navigation */
+        .navbar {
+            padding: 1rem 0;
+            background: rgba(3, 59, 5, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            transition: var(--transition-smooth);
+            z-index: 1000;
+        }
+
+        .navbar.scrolled {
+            background: rgba(3, 59, 5, 0.98);
+            box-shadow: var(--shadow-3d);
+            transform: translateY(0);
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--glow-green) !important;
+            text-shadow: var(--shadow-text);
+            transition: var(--transition-smooth);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+        }
+
+        .navbar-brand:hover {
+            color: var(--glow-green) !important;
+        }
+
+        .navbar-brand i {
+            font-size: 2rem;
+            animation: rotate3d 8s linear infinite;
+            transform-style: preserve-3d;
+        }
+
+        @keyframes rotate3d {
+            0% {
+                transform: rotateY(0deg) rotateX(0deg);
+            }
+
+            50% {
+                transform: rotateY(180deg) rotateX(10deg);
+            }
+
+            100% {
+                transform: rotateY(360deg) rotateX(0deg);
+            }
+        }
+
+        .nav-link {
+            color: var(--text-secondary) !important;
+            font-weight: 500;
+            margin: 0 0.5rem;
+            padding: 0.5rem 1rem !important;
+            border-radius: 25px;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-secondary);
+            transition: var(--transition-smooth);
+            z-index: -1;
+        }
+
+        .nav-link:hover {
+            color: var(--dark-green) !important;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .nav-link:hover::before {
+            left: 0;
+        }
+
+        .navbar-toggler {
+            border: none;
+            color: var(--glow-green);
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%2831, 255, 32, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='m4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+        }
+
+        /* 3D Buttons */
+        .btn-3d {
+            background: var(--gradient-primary);
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            color: var(--text-light);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition-bounce);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-3d);
+            transform: perspective(1000px) rotateX(0deg);
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-3d::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-secondary);
+            transition: var(--transition-smooth);
+            z-index: -1;
+        }
+
+        .btn-3d:hover {
+            transform: perspective(1000px) rotateX(-10deg) translateY(-5px) scale(1.05);
+            box-shadow: var(--shadow-glow);
+            color: var(--dark-green);
+        }
+
+        .btn-3d:hover::before {
+            left: 0;
+        }
+
+        .btn-outline-3d {
+            background: transparent;
+            border: 2px solid var(--accent-green);
+            color: var(--glow-green);
+            transition: var(--transition-bounce);
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-outline-3d:hover {
+            background: var(--accent-green);
+            color: var(--dark-green);
+            transform: perspective(1000px) rotateX(-10deg) translateY(-5px) scale(1.05);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+        }
+
+        /* Hero Section with 3D Effects */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            background: var(--gradient-primary);
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(16, 160, 19, 0.1) 0%, transparent 70%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            text-shadow: var(--shadow-text);
+            background: linear-gradient(45deg, var(--text-light), var(--glow-green));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 2vw, 1.4rem);
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            line-height: 1.7;
+        }
+
+        .hero-3d-element {
+            position: relative;
+            transform-style: preserve-3d;
+            transition: var(--transition-smooth);
+        }
+
+        .hero-3d-element:hover {
+            transform: perspective(1000px) rotateY(15deg) rotateX(5deg);
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            transform: perspective(1000px) rotateX(0deg);
+            height: 100%;
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-glass);
+            opacity: 0;
+            transition: var(--transition-smooth);
+            z-index: -1;
+        }
+
+        .glass-card:hover {
+            transform: perspective(1000px) rotateX(-5deg) translateY(-15px) scale(1.02);
+            box-shadow: var(--shadow-glow);
+            border-color: var(--glow-green);
+        }
+
+        .glass-card:hover::before {
+            opacity: 1;
+        }
+
+        /* 3D Icons */
+        .icon-3d {
+            width: 80px;
+            height: 80px;
+            background: var(--gradient-secondary);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--dark-green);
+            margin-bottom: 1.5rem;
+            transition: var(--transition-bounce);
+            transform: perspective(1000px) rotateX(0deg);
+            box-shadow: var(--shadow-3d);
+        }
+
+        .icon-3d:hover {
+            transform: perspective(1000px) rotateX(-15deg) rotateY(15deg) scale(1.1);
+            animation: pulse3d 2s infinite;
+        }
+
+        @keyframes pulse3d {
+
+            0%,
+            100% {
+                transform: perspective(1000px) rotateX(-15deg) rotateY(15deg) scale(1.1);
+            }
+
+            50% {
+                transform: perspective(1000px) rotateX(-15deg) rotateY(15deg) scale(1.2);
+            }
+        }
+
+        /* Sections */
+        .section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .section-dark {
+            background: var(--light-green);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--glow-green);
+            text-shadow: var(--shadow-text);
+            position: relative;
+        }
+
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--gradient-secondary);
+            border-radius: 2px;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 2rem auto 0;
+        }
+
+        /* Course Cards */
+        .course-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 2rem;
+            height: 100%;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            transform: perspective(1000px) rotateX(0deg);
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--glow-green) 0%, transparent 70%);
+            opacity: 0;
+            transition: var(--transition-smooth);
+            transform: rotate(0deg);
+        }
+
+        .course-card:hover {
+            transform: perspective(1000px) rotateX(-10deg) translateY(-15px) scale(1.05);
+            box-shadow: var(--shadow-glow);
+            border-color: var(--glow-green);
+        }
+
+        .course-card:hover::before {
+            opacity: 0.05;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Profile Cards */
+        .profile-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: 25px;
+            padding: 2.5rem;
+            text-align: center;
+            height: 100%;
+            transition: var(--transition-smooth);
+            position: relative;
+            overflow: hidden;
+            transform: perspective(1000px) rotateX(0deg);
+        }
+
+        .profile-card:hover {
+            transform: perspective(1000px) rotateX(-10deg) translateY(-15px) scale(1.02);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1.5rem;
+            border: 4px solid var(--glow-green);
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            position: relative;
+            transform: perspective(1000px) rotateX(0deg);
+        }
+
+        .profile-image:hover {
+            transform: perspective(1000px) rotateX(-15deg) scale(1.1);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .profile-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition-smooth);
+        }
+
+        .profile-image:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Stats Section */
+        .stats-section {
+            background: var(--dark-green);
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stats-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, var(--accent-green) 0%, transparent 70%);
+            opacity: 0.1;
+        }
+
+        .stat-item {
+            text-align: center;
+            transition: var(--transition-bounce);
+            position: relative;
+            z-index: 2;
+            transform: perspective(1000px) rotateX(0deg);
+        }
+
+        .stat-item:hover {
+            transform: perspective(1000px) rotateX(-15deg) translateY(-10px) scale(1.1);
+        }
+
+        .stat-number {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 800;
+            color: var(--glow-green);
+            text-shadow: var(--shadow-text);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--dark-green);
+            padding: 4rem 0 2rem;
+            border-top: 1px solid var(--glass-border);
+            position: relative;
+        }
+
+        .footer h3 {
+            color: var(--glow-green);
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .footer a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .footer a:hover {
+            color: var(--glow-green);
+            transform: translateX(10px);
+        }
+
+        .footer p {
+            color: var(--text-secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Back to top button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--gradient-primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-light);
+            font-size: 1.5rem;
+            text-decoration: none;
+            box-shadow: var(--shadow-3d);
+            transition: var(--transition-bounce);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: perspective(1000px) rotateX(0deg) scale(0.8);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: perspective(1000px) rotateX(0deg) scale(1);
+        }
+
+        .back-to-top:hover {
+            transform: perspective(1000px) rotateX(-15deg) translateY(-10px) scale(1.1);
+            box-shadow: var(--shadow-glow);
+            color: var(--text-light);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .hero-3d-element:hover {
+                transform: none;
+            }
+
+            .glass-card:hover,
+            .course-card:hover,
+            .profile-card:hover {
+                transform: translateY(-5px) scale(1.02);
+            }
+
+            .btn-3d:hover,
+            .btn-outline-3d:hover {
+                transform: translateY(-2px) scale(1.02);
+            }
+
+            .stat-item:hover {
+                transform: translateY(-5px) scale(1.05);
+            }
+
+            .icon-3d:hover {
+                transform: scale(1.1);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .section {
+                padding: 4rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .glass-card,
+            .course-card,
+            .profile-card {
+                padding: 1.5rem;
+            }
+
+            .icon-3d {
+                width: 60px;
+                height: 60px;
+                font-size: 1.5rem;
+            }
+
+            .profile-image {
+                width: 120px;
+                height: 120px;
+            }
+        }
+
+        /* Loading Animation */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 1s ease;
+        }
+
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid var(--glass-border);
+            border-left: 4px solid var(--glow-green);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Scroll Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: var(--transition-smooth);
+        }
+
+        .reveal.revealed {
+            opacity: 0;
+            transform: translateY(0);
+        }
+
+        /* Particle System */
+        #particles-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        /* Badge styles */
+        .badge {
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        /* Star rating */
+        .text-warning {
+            color: #ffc107 !important;
+        }
+
+        /* List styles */
+        .list-unstyled {
+            padding-left: 0;
+            list-style: none;
+        }
+
+        /* Check icon color */
+        .text-success {
+            color: var(--bright-green) !important;
+        }
+
+        /* Float animation for hero SVG */
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+    </div>
+
+    <!-- Background Effects -->
+    <div class="bg-3d-grid"></div>
+    <div class="floating-orbs" id="floatingOrbs"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg fixed-top" id="navbar">
+        <div class="container">
+            <a class="navbar-brand" href="#home">
+                <i class="fas fa-graduation-cap"></i>
+                EduCareer Pro
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#courses">Courses</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#team">Team</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#reviews">Reviews</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                </ul>
+                <a href="#contact" class="btn btn-3d ms-3 d-none d-lg-block">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Back to Top Button -->
+    <a href="#home" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <canvas id="particles-canvas"></canvas>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 hero-content">
+                    <div class="hero-3d-element">
+                        <h1 class="reveal">Transform Your Future with Smart Education & Career Solutions</h1>
+                        <p class="reveal">Bridging the gap between learning and earning through cutting-edge technology
+                            and personalized career guidance. Join thousands of students who have transformed their
+                            careers with us.</p>
+                        <div class="d-flex flex-wrap gap-3 mt-4 reveal">
+                            <a href="#courses" class="btn btn-3d">
+                                <span>Explore Courses</span>
+                                <i class="fas fa-arrow-right ms-2"></i>
+                            </a>
+                            <a href="#about" class="btn btn-outline-3d">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="hero-3d-element reveal">
+                        <svg width="100%" height="400" viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg"
+                            class="float-animation">
+                            <defs>
+                                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#0a5d0c" />
+                                    <stop offset="100%" stop-color="#10a013" />
+                                </linearGradient>
+                                <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+                                    <stop offset="0%" stop-color="#0d7e0f" />
+                                    <stop offset="100%" stop-color="#1eff20" />
+                                </linearGradient>
+                            </defs>
+
+                            <!-- Background elements -->
+                            <circle cx="500" cy="100" r="40" fill="url(#grad1)" opacity="0.3">
+                                <animate attributeName="cy" values="100;80;100" dur="8s" repeatCount="indefinite" />
+                            </circle>
+                            <circle cx="80" cy="300" r="30" fill="url(#grad2)" opacity="0.3">
+                                <animate attributeName="cx" values="80;100;80" dur="10s" repeatCount="indefinite" />
+                            </circle>
+
+                            <!-- Main illustration -->
+                            <g transform="translate(100, 50)">
+                                <!-- Person -->
+                                <circle cx="200" cy="150" r="50" fill="#f0f4f8" opacity="0.9" />
+                                <circle cx="185" cy="135" r="5" fill="#033b05" />
+                                <circle cx="215" cy="135" r="5" fill="#033b05" />
+                                <path d="M200 130 Q220 110 240 130" stroke="#10a013" stroke-width="2" fill="none" />
+
+                                <!-- Graduation cap -->
+                                <path d="M170 110 L230 110 L215 90 L185 90 Z" fill="url(#grad1)" />
+                                <path d="M200 110 L200 90" stroke="url(#grad1)" stroke-width="2" />
+
+                                <!-- Book -->
+                                <rect x="260" y="170" width="40" height="60" rx="5" fill="url(#grad2)">
+                                    <animateTransform attributeName="transform" type="translate"
+                                        values="0,0; 0,-10; 0,0" dur="3s" repeatCount="indefinite" />
+                                </rect>
+                                <line x1="260" y1="190" x2="300" y2="190" stroke="white" stroke-width="1" />
+                                <line x1="260" y1="210" x2="300" y2="210" stroke="white" stroke-width="1" />
+
+                                <!-- Laptop -->
+                                <rect x="120" y="170" width="50" height="35" rx="3" fill="#033b05" />
+                                <rect x="125" y="175" width="40" height="25" rx="2" fill="url(#grad1)" />
+
+                                <!-- Certificate -->
+                                <rect x="280" y="100" width="60" height="40" rx="3" fill="white" stroke="url(#grad2)"
+                                    stroke-width="2" />
+                                <path d="M290 115 H330" stroke="url(#grad2)" stroke-width="1" />
+                                <path d="M290 125 H330" stroke="url(#grad2)" stroke-width="1" />
+
+                                <!-- Rocket -->
+                                <g>
+                                    <path d="M150 80 L140 100 L160 100 Z" fill="url(#grad2)" />
+                                    <circle cx="150" cy="70" r="10" fill="url(#grad2)" />
+                                    <animateTransform attributeName="transform" type="translate"
+                                        values="0,0; 0,-20; 0,0" dur="4s" repeatCount="indefinite" />
+                                </g>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Courses Section -->
+    <section class="section" id="courses">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Featured Courses</h2>
+                <p>Explore our top-rated courses designed to boost your career with practical skills and industry
+                    insights.</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="course-card reveal">
+                        <div class="icon-3d">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3 class="mb-3" style="color: var(--glow-green);">Data Science Mastery</h3>
+                        <p class="mb-4" style="color: var(--text-secondary);">Learn machine learning, AI, and big data
+                            analytics with hands-on projects and real-world applications.</p>
+                        <a href="#" class="btn btn-outline-3d">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="course-card reveal">
+                        <div class="icon-3d">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3 class="mb-3" style="color: var(--glow-green);">Full Stack Development</h3>
+                        <p class="mb-4" style="color: var(--text-secondary);">Master front-end and back-end technologies
+                            including React, Node.js, and database management.</p>
+                        <a href="#" class="btn btn-outline-3d">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="course-card reveal">
+                        <div class="icon-3d">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h3 class="mb-3" style="color: var(--glow-green);">Cybersecurity Essentials</h3>
+                        <p class="mb-4" style="color: var(--text-secondary);">Gain expertise in ethical hacking, network
+                            security, and threat detection with certified training.</p>
+                        <a href="#" class="btn btn-outline-3d">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="course-card reveal">
+                        <div class="icon-3d">
+                            <i class="fas fa-cloud"></i>
+                        </div>
+                        <h3 class="mb-3" style="color: var(--glow-green);">Cloud Computing</h3>
+                        <p class="mb-4" style="color: var(--text-secondary);">Master AWS, Azure, and Google Cloud
+                            platforms with DevOps integration and scalable solutions.</p>
+                        <a href="#" class="btn btn-outline-3d">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="course-card reveal">
+                        <div class="icon-3d">
+                            <i class="fas fa-palette"></i>
+                        </div>
+                        <h3 class="mb-3" style="color: var(--glow-green);">UI/UX Design</h3>
+                        <p class="mb-4" style="color: var(--text-secondary);">Create stunning user interfaces and
+                            experiences with design thinking, prototyping, and user research.</p>
+                        <a href="#" class="btn btn-outline-3d">Learn More</a>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="course-card reveal">
+                        <div class="icon-3d">
+                            <i class="fas fa-bullhorn"></i>
+                        </div>
+                        <h3 class="mb-3" style="color: var(--glow-green);">Digital Marketing</h3>
+                        <p class="mb-4" style="color: var(--text-secondary);">Master SEO, social media marketing, PPC,
+                            and analytics to drive business growth online.</p>
+                        <a href="#" class="btn btn-outline-3d">Learn More</a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-5">
+                <a href="#" class="btn btn-3d reveal">View All Courses</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Company Section -->
+    <section class="section section-dark" id="about">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6">
+                    <div class="reveal">
+                        <div class="profile-image mx-auto mb-4" style="width: 300px; height: 300px;">
+                            <img src="https://via.placeholder.com/300x300/10a013/ffffff?text=EduCareer+Pro"
+                                alt="EduCareer Pro Team" style="border-radius: 50%;">
+                        </div>
+                        <div class="text-center">
+                            <div class="d-flex justify-content-center gap-4 flex-wrap">
+                                <div class="glass-card" style="padding: 1rem; min-width: 100px;">
+                                    <div class="stat-number" style="font-size: 1.5rem;">50K+</div>
+                                    <div class="stat-label" style="font-size: 0.9rem;">Students</div>
+                                </div>
+                                <div class="glass-card" style="padding: 1rem; min-width: 100px;">
+                                    <div class="stat-number" style="font-size: 1.5rem;">95%</div>
+                                    <div class="stat-label" style="font-size: 0.9rem;">Placement</div>
+                                </div>
+                                <div class="glass-card" style="padding: 1rem; min-width: 100px;">
+                                    <div class="stat-number" style="font-size: 1.5rem;">200+</div>
+                                    <div class="stat-label" style="font-size: 0.9rem;">Partners</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="reveal">
+                        <h2 class="mb-4" style="color: var(--glow-green);">About EduCareer Pro</h2>
+                        <p class="mb-4" style="color: var(--text-secondary);">EduCareer Pro is a pioneering ed-tech and
+                            career consultancy company founded in 2023 in Mohali, Punjab, by two friends, Harsh and
+                            Chandan. Their vision was born from a direct understanding of the critical challenges
+                            students face: bridging the daunting gap between academic knowledge and the practical skills
+                            demanded by the modern workforce.</p>
+
+                        <p class="mb-4" style="color: var(--text-secondary);">Driven by a mission to solve these
+                            problems, we empower the next generation of professionals with cutting-edge skills and
+                            strategic career guidance. We specialize in transforming academic learners into
+                            industry-ready candidates through innovative, industry-aligned learning solutions.</p>
+
+                        <p class="mb-4" style="color: var(--text-secondary);">Our curriculum, focused intently on
+                            emerging technologies and hands-on skill development, is designed to prepare students for
+                            high-demand roles in top MNCs and innovative startups worldwide. In a short time, we have
+                            successfully transformed the careers of over 50,000 students across India.</p>
+
+                        <div class="mt-4">
+                            <a href="#services" class="btn btn-3d">Our Services</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="section" id="services">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Our Comprehensive Solutions</h2>
+                <p>Empowering individuals and organizations with innovative education technology and strategic career
+                    guidance.</p>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="glass-card reveal">
+                        <div class="icon-3d">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3 class="mb-3" style="color: var(--glow-green);">EdTech Solutions</h3>
+                        <p class="mb-4" style="color: var(--text-secondary);">Revolutionary learning management systems,
+                            interactive courseware, and AI-powered personalized learning experiences.</p>
+                        <ul class="list-unstyled" style="color: var(--text-muted);">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Custom LMS Development</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Interactive Course Creation
+                            </li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>AI-Powered Analytics</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Mobile Learning Apps</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="glass-card reveal">
+                        <div class="icon-3d">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h3 class="mb-3" style="color: var(--glow-green);">Career Consultancy</h3>
+                        <p class="mb-4" style="color: var(--text-secondary);">Expert guidance for career transitions,
+                            skill development planning, and strategic job placement services.</p>
+                        <ul class="list-unstyled" style="color: var(--text-muted);">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Career Assessment & Planning
+                            </li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Resume & Portfolio
+                                Optimization</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Interview Preparation</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Industry Network Access</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="glass-card reveal">
+                        <div class="icon-3d">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3 class="mb-3" style="color: var(--glow-green);">Skill Development</h3>
+                        <p class="mb-4" style="color: var(--text-secondary);">Comprehensive training programs in
+                            emerging technologies and industry-specific competencies.</p>
+                        <ul class="list-unstyled" style="color: var(--text-muted);">
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Technical Skills Training
+                            </li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Soft Skills Development</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Industry Certification
+                                Programs</li>
+                            <li class="mb-2"><i class="fas fa-check text-success me-2"></i>Mentorship Programs</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership Team Section -->
+    <section class="section section-dark" id="team">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Our Leadership Team</h2>
+                <p>Meet the visionary leaders driving innovation in education technology and career development.</p>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-5 col-md-6 mb-4">
+                    <div class="profile-card reveal">
+                        <div class="profile-image mx-auto">
+                            <img src="https://via.placeholder.com/150x150/10a013/ffffff?text=CS" alt="Chandan Shukla">
+                        </div>
+                        <h3 class="mb-2" style="color: var(--glow-green);">Chandan Shukla</h3>
+                        <p class="mb-3" style="color: var(--accent-green); font-weight: 600;">Founder & CMO</p>
+                        <p style="color: var(--text-secondary);">✉️ info@educareerpro.com</p>
+                        <p style="color: var(--text-secondary);">🌐 www.educareerpro.com</p>
+                        <p style="color: var(--text-secondary);">💬 24/7 Student Support</p>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center mt-4 pt-4" style="border-top: 1px solid var(--glass-border);">
+                <p style="color: var(--text-muted);">&copy; 2025 EduCareer Pro. All rights reserved. | Privacy Policy |
+                    Terms of Service</p>
+            </div>
+        </div>
+        </footer>
+
+        <!-- Bootstrap JS -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+        <script>
+            // GSAP Animations and 3D Effects
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Loading Animation
+            window.addEventListener('load', () => {
+                gsap.to('#loadingOverlay', {
+                    opacity: 0,
+                    duration: 1,
+                    onComplete: () => {
+                        document.getElementById('loadingOverlay').style.display = 'none';
+                        initAnimations();
+                    }
+                });
+            });
+
+            function initAnimations() {
+                // Hero text animation
+                gsap.timeline()
+                    .from('.hero h1', {
+                        y: 100,
+                        opacity: 0,
+                        duration: 1.2,
+                        ease: "power3.out"
+                    })
+                    .from('.hero p', {
+                        y: 50,
+                        opacity: 0,
+                        duration: 1,
+                        ease: "power3.out"
+                    }, "-=0.5")
+                    .from('.hero .btn', {
+                        y: 30,
+                        opacity: 0,
+                        duration: 0.8,
+                        stagger: 0.2,
+                        ease: "power3.out"
+                    }, "-=0.3");
+
+                // Reveal animations on scroll
+                gsap.utils.toArray('.reveal').forEach((element) => {
+                    gsap.fromTo(element, {
+                        y: 50,
+                        opacity: 0
+                    }, {
+                        y: 0,
+                        opacity: 1,
+                        duration: 1,
+                        ease: "power3.out",
+                        scrollTrigger: {
+                            trigger: element,
+                            start: "top 85%",
+                            once: true
+                        }
+                    });
+                });
+
+                // Stats counter animation
+                gsap.utils.toArray('.stat-number').forEach((stat) => {
+                    const target = parseInt(stat.dataset.target);
+                    gsap.fromTo(stat, {
+                        textContent: 0
+                    }, {
+                        textContent: target,
+                        duration: 2,
+                        ease: "power2.out",
+                        snap: { textContent: 1 },
+                        scrollTrigger: {
+                            trigger: stat,
+                            start: "top 80%",
+                            once: true
+                        },
+                        onUpdate: function () {
+                            const current = Math.ceil(this.targets()[0].textContent);
+                            if (target >= 1000) {
+                                stat.textContent = (current / 1000).toFixed(0) + 'K+';
+                            } else {
+                                stat.textContent = current + (target === 95 ? '%' : '+');
+                            }
+                        }
+                    });
+                });
+
+                // 3D hover effects for cards
+                gsap.utils.toArray('.glass-card, .course-card, .profile-card').forEach((card) => {
+                    card.addEventListener('mouseenter', () => {
+                        if (window.innerWidth > 992) {
+                            gsap.to(card, {
+                                rotationX: -5,
+                                rotationY: 5,
+                                y: -15,
+                                scale: 1.02,
+                                duration: 0.6,
+                                ease: "power2.out"
+                            });
+                        } else {
+                            gsap.to(card, {
+                                y: -5,
+                                scale: 1.02,
+                                duration: 0.6,
+                                ease: "power2.out"
+                            });
+                        }
+                    });
+
+                    card.addEventListener('mouseleave', () => {
+                        gsap.to(card, {
+                            rotationX: 0,
+                            rotationY: 0,
+                            y: 0,
+                            scale: 1,
+                            duration: 0.6,
+                            ease: "power2.out"
+                        });
+                    });
+                });
+
+                // Icon 3D effects
+                gsap.utils.toArray('.icon-3d').forEach((icon) => {
+                    icon.addEventListener('mouseenter', () => {
+                        if (window.innerWidth > 992) {
+                            gsap.to(icon, {
+                                rotationX: -15,
+                                rotationY: 15,
+                                scale: 1.1,
+                                duration: 0.6,
+                                ease: "power2.out"
+                            });
+                        }
+                    });
+
+                    icon.addEventListener('mouseleave', () => {
+                        gsap.to(icon, {
+                            rotationX: 0,
+                            rotationY: 0,
+                            scale: 1,
+                            duration: 0.6,
+                            ease: "power2.out"
+                        });
+                    });
+                });
+            }
+
+            // Floating orbs creation
+            function createFloatingOrbs() {
+                const container = document.getElementById('floatingOrbs');
+                for (let i = 0; i < 8; i++) {
+                    const orb = document.createElement('div');
+                    orb.className = 'orb';
+                    const size = Math.random() * 100 + 50;
+                    orb.style.width = size + 'px';
+                    orb.style.height = size + 'px';
+                    orb.style.left = Math.random() * 100 + '%';
+                    orb.style.top = Math.random() * 100 + '%';
+                    container.appendChild(orb);
+
+                    // Animate orbs
+                    gsap.to(orb, {
+                        x: Math.random() * 300 - 150,
+                        y: Math.random() * 300 - 150,
+                        duration: Math.random() * 15 + 10,
+                        repeat: -1,
+                        yoyo: true,
+                        ease: "sine.inOut"
+                    });
+                }
+            }
+
+            // Particles system
+            function initParticles() {
+                const canvas = document.getElementById('particles-canvas');
+                if (!canvas) return;
+
+                const ctx = canvas.getContext('2d');
+                let particles = [];
+                let mouse = { x: null, y: null, radius: 150 };
+
+                function resizeCanvas() {
+                    canvas.width = canvas.offsetWidth;
+                    canvas.height = canvas.offsetHeight;
+                }
+
+                resizeCanvas();
+                window.addEventListener('resize', resizeCanvas);
+
+                // Mouse interaction
+                canvas.addEventListener('mousemove', (e) => {
+                    const rect = canvas.getBoundingClientRect();
+                    mouse.x = e.clientX - rect.left;
+                    mouse.y = e.clientY - rect.top;
+                });
+
+                canvas.addEventListener('mouseleave', () => {
+                    mouse.x = null;
+                    mouse.y = null;
+                });
+
+                class Particle {
+                    constructor() {
+                        this.x = Math.random() * canvas.width;
+                        this.y = Math.random() * canvas.height;
+                        this.vx = (Math.random() - 0.5) * 1;
+                        this.vy = (Math.random() - 0.5) * 1;
+                        this.size = Math.random() * 2 + 1;
+                        this.opacity = Math.random() * 0.5 + 0.2;
+                    }
+
+                    update() {
+                        // Mouse interaction
+                        if (mouse.x !== null && mouse.y !== null) {
+                            const dx = mouse.x - this.x;
+                            const dy = mouse.y - this.y;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+
+                            if (distance < mouse.radius) {
+                                const force = (mouse.radius - distance) / mouse.radius;
+                                const angle = Math.atan2(dy, dx);
+                                this.x -= Math.cos(angle) * force * 2;
+                                this.y -= Math.sin(angle) * force * 2;
+                            }
+                        }
+
+                        this.x += this.vx;
+                        this.y += this.vy;
+
+                        // Boundary collision
+                        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+
+                        // Keep particles in bounds
+                        this.x = Math.max(0, Math.min(canvas.width, this.x));
+                        this.y = Math.max(0, Math.min(canvas.height, this.y));
+                    }
+
+                    draw() {
+                        ctx.globalAlpha = this.opacity;
+                        ctx.fillStyle = '#1eff20';
+                        ctx.beginPath();
+                        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                        ctx.fill();
+
+                        // Add glow effect
+                        ctx.shadowColor = '#1eff20';
+                        ctx.shadowBlur = 10;
+                        ctx.fill();
+                        ctx.shadowBlur = 0;
+                    }
+                }
+
+                // Create particles
+                for (let i = 0; i < 80; i++) {
+                    particles.push(new Particle());
+                }
+
+                function animate() {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                    particles.forEach(particle => {
+                        particle.update();
+                        particle.draw();
+                    });
+
+                    // Draw connections
+                    particles.forEach((particle, i) => {
+                        particles.slice(i + 1).forEach(otherParticle => {
+                            const dx = particle.x - otherParticle.x;
+                            const dy = particle.y - otherParticle.y;
+                            const distance = Math.sqrt(dx * dx + dy * dy);
+
+                            if (distance < 120) {
+                                ctx.globalAlpha = (120 - distance) / 120 * 0.3;
+                                ctx.strokeStyle = '#10a013';
+                                ctx.lineWidth = 0.5;
+                                ctx.beginPath();
+                                ctx.moveTo(particle.x, particle.y);
+                                ctx.lineTo(otherParticle.x, otherParticle.y);
+                                ctx.stroke();
+                            }
+                        });
+                    });
+
+                    requestAnimationFrame(animate);
+                }
+
+                animate();
+            }
+
+            // Navbar scroll effect
+            window.addEventListener('scroll', () => {
+                const navbar = document.getElementById('navbar');
+                const backToTop = document.getElementById('backToTop');
+
+                if (window.scrollY > 100) {
+                    navbar.classList.add('scrolled');
+                    backToTop.classList.add('visible');
+                } else {
+                    navbar.classList.remove('scrolled');
+                    backToTop.classList.remove('visible');
+                }
+            });
+
+            // Smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        const offsetTop = target.offsetTop - 80;
+                        window.scrollTo({
+                            top: offsetTop,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Intersection Observer for reveal animations (fallback)
+            if (!window.gsap) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('revealed');
+                        }
+                    });
+                }, {
+                    threshold: 0.1
+                });
+
+                document.querySelectorAll('.reveal').forEach(el => {
+                    observer.observe(el);
+                });
+            }
+
+            // Initialize everything
+            document.addEventListener('DOMContentLoaded', () => {
+                createFloatingOrbs();
+                initParticles();
+
+                // Add touch support for mobile
+                if ('ontouchstart' in window) {
+                    document.body.classList.add('touch-device');
+                }
+            });
+
+            // Performance optimization
+            let ticking = false;
+
+            function requestTick() {
+                if (!ticking) {
+                    requestAnimationFrame(updateAnimations);
+                    ticking = true;
+                }
+            }
+
+            function updateAnimations() {
+                // Update any ongoing animations here
+                ticking = false;
+            }
+
+            // Preload critical resources
+            const preloadImages = [
+                'https://via.placeholder.com/300x300/10a013/ffffff?text=EduCareer+Pro',
+                'https://via.placeholder.com/150x150/10a013/ffffff?text=CS',
+                'https://via.placeholder.com/150x150/10a013/ffffff?text=HK'
+            ];
+
+            preloadImages.forEach(src => {
+                const img = new Image();
+                img.src = src;
+            });
+
+            // Error handling
+            window.addEventListener('error', (e) => {
+                console.warn('Error caught:', e.error);
+            });
+
+            // Optimize for different devices
+            const mediaQuery = window.matchMedia('(max-width: 768px)');
+
+            function handleDeviceChange(e) {
+                if (e.matches) {
+                    // Mobile optimizations
+                    document.body.classList.add('mobile-device');
+                } else {
+                    document.body.classList.remove('mobile-device');
+                }
+            }
+
+            mediaQuery.addListener(handleDeviceChange);
+            handleDeviceChange(mediaQuery);
+        </script>
+</body>
+
+</html>-secondary); font-size: 0.9rem;">With 5+ years in EdTech and corporate training, he holds a MCA from LPU and has
+trained over 10,000 professionals in emerging technologies.</p>
+<div class="d-flex justify-content-center gap-3 mt-3">
+    <a href="#" class="btn btn-outline-3d btn-sm"><i class="fab fa-linkedin-in"></i></a>
+    <a href="#" class="btn btn-outline-3d btn-sm"><i class="fab fa-twitter"></i></a>
+    <a href="#" class="btn btn-outline-3d btn-sm"><i class="fas fa-envelope"></i></a>
+</div>
+</div>
+</div>
+<div class="col-lg-5 col-md-6 mb-4">
+    <div class="profile-card reveal">
+        <div class="profile-image mx-auto">
+            <img src="https://via.placeholder.com/150x150/10a013/ffffff?text=HK" alt="Harsh Kumar">
+        </div>
+        <h3 class="mb-2" style="color: var(--glow-green);">Harsh Kumar</h3>
+        <p class="mb-3" style="color: var(--accent-green); font-weight: 600;">Co-Founder & CEO, CTO</p>
+        <p style="color: var(--text-secondary); font-size: 0.9rem;">A strategic operations expert with 4+ years
+            experience. MCA from LPU, he specializes in curriculum design and has placed 5,000+ students in top MNCs.
+        </p>
+        <div class="d-flex justify-content-center gap-3 mt-3">
+            <a href="#" class="btn btn-outline-3d btn-sm"><i class="fab fa-linkedin-in"></i></a>
+            <a href="#" class="btn btn-outline-3d btn-sm"><i class="fab fa-twitter"></i></a>
+            <a href="#" class="btn btn-outline-3d btn-sm"><i class="fas fa-envelope"></i></a>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Industrial Trainers Section -->
+<section class="section" id="trainers">
+    <div class="container">
+        <div class="section-header reveal">
+            <h2>Our Expert Industrial Trainers</h2>
+            <p>Learn from industry veterans with decades of real-world experience and a passion for teaching.</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="profile-card reveal">
+                    <div class="profile-image mx-auto">
+                        <img src="https://via.placeholder.com/150x150/10a013/ffffff?text=AK" alt="Anjani Kumar">
+                    </div>
+                    <h3 class="mb-2" style="color: var(--glow-green);">Anjani Kumar</h3>
+                    <p class="mb-3" style="color: var(--accent-green); font-weight: 600;">Senior Data Scientist</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Former Lead Data Scientist at Google
+                        with 12+ years of experience in machine learning and AI.</p>
+                    <div class="mt-3">
+                        <span class="badge" style="background: var(--gradient-secondary); color: var(--dark-green);">12+
+                            Years</span>
+                        <span class="badge" style="background: var(--gradient-secondary); color: var(--dark-green);">5K+
+                            Students</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="profile-card reveal">
+                    <div class="profile-image mx-auto">
+                        <img src="https://via.placeholder.com/150x150/10a013/ffffff?text=PS" alt="Priya Sharma">
+                    </div>
+                    <h3 class="mb-2" style="color: var(--glow-green);">Priya Sharma</h3>
+                    <p class="mb-3" style="color: var(--accent-green); font-weight: 600;">Full Stack Lead</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">Ex-Microsoft developer with 10 years of
+                        experience in full-stack development and cloud solutions.</p>
+                    <div class="mt-3">
+                        <span class="badge" style="background: var(--gradient-secondary); color: var(--dark-green);">10+
+                            Years</span>
+                        <span class="badge"
+                            style="background: var(--gradient-secondary); color: var(--dark-green);">3.5K+
+                            Students</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="profile-card reveal">
+                    <div class="profile-image mx-auto">
+                        <img src="https://via.placeholder.com/150x150/10a013/ffffff?text=RS" alt="Rajiv Singh">
+                    </div>
+                    <h3 class="mb-2" style="color: var(--glow-green);">Rajiv Singh</h3>
+                    <p class="mb-3" style="color: var(--accent-green); font-weight: 600;">Cybersecurity Architect</p>
+                    <p style="color: var(--text-secondary); font-size: 0.9rem;">15 years in cybersecurity with
+                        government agencies and Fortune 500 companies.</p>
+                    <div class="mt-3">
+                        <span class="badge" style="background: var(--gradient-secondary); color: var(--dark-green);">15+
+                            Years</span>
+                        <span class="badge"
+                            style="background: var(--gradient-secondary); color: var(--dark-green);">2.8K+
+                            Students</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Student Reviews Section -->
+<section class="section section-dark" id="reviews">
+    <div class="container">
+        <div class="section-header reveal">
+            <h2>What Our Students Say</h2>
+            <p>Real success stories from students who transformed their careers with our training programs.</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="glass-card reveal" style="min-height: 350px;">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="profile-image me-3" style="width: 60px; height: 60px; border-width: 2px;">
+                            <img src="https://via.placeholder.com/60x60/10a013/ffffff?text=AS" alt="Aarav Sharma">
+                        </div>
+                        <div>
+                            <h5 class="mb-1" style="color: var(--glow-green);">Aarav Sharma</h5>
+                            <p class="mb-1" style="color: var(--accent-green); font-size: 0.9rem;">Data Science Program
+                            </p>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary); font-style: italic; font-size: 0.9rem;">"The Data Science
+                        program completely transformed my career. The teaching methodology made complex concepts easy to
+                        understand. I went from a beginner to getting placed at Amazon with a 200% salary hike."</p>
+                    <div class="mt-3">
+                        <span class="badge"
+                            style="background: var(--gradient-secondary); color: var(--dark-green); padding: 0.5rem 1rem;">Placed
+                            at Amazon</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="glass-card reveal" style="min-height: 350px;">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="profile-image me-3" style="width: 60px; height: 60px; border-width: 2px;">
+                            <img src="https://via.placeholder.com/60x60/10a013/ffffff?text=SP" alt="Sneha Patel">
+                        </div>
+                        <div>
+                            <h5 class="mb-1" style="color: var(--glow-green);">Sneha Patel</h5>
+                            <p class="mb-1" style="color: var(--accent-green); font-size: 0.9rem;">Full Stack
+                                Development</p>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary); font-style: italic; font-size: 0.9rem;">"The real-world
+                        examples and patient teaching approach helped me build confidence. The curriculum was perfectly
+                        structured, and I received 3 job offers within a month of completing the course!"</p>
+                    <div class="mt-3">
+                        <span class="badge"
+                            style="background: var(--gradient-secondary); color: var(--dark-green); padding: 0.5rem 1rem;">3
+                            Job Offers</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6 mb-4">
+                <div class="glass-card reveal" style="min-height: 350px;">
+                    <div class="d-flex align-items-center mb-3">
+                        <div class="profile-image me-3" style="width: 60px; height: 60px; border-width: 2px;">
+                            <img src="https://via.placeholder.com/60x60/10a013/ffffff?text=RJ" alt="Rahul Joshi">
+                        </div>
+                        <div>
+                            <h5 class="mb-1" style="color: var(--glow-green);">Rahul Joshi</h5>
+                            <p class="mb-1" style="color: var(--accent-green); font-size: 0.9rem;">Cybersecurity Program
+                            </p>
+                            <div class="text-warning">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p style="color: var(--text-secondary); font-style: italic; font-size: 0.9rem;">"The cybersecurity
+                        program is outstanding. The hands-on labs simulating real cyber attacks were incredible. I
+                        passed my CEH exam on the first attempt and landed a job as a Security Analyst."</p>
+                    <div class="mt-3">
+                        <span class="badge"
+                            style="background: var(--gradient-secondary); color: var(--dark-green); padding: 0.5rem 1rem;">CEH
+                            Certified</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item reveal">
+                    <span class="stat-number" data-target="50000">0</span>
+                    <div class="stat-label">Students Trained</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item reveal">
+                    <span class="stat-number" data-target="95">0</span>
+                    <div class="stat-label">Placement Rate (%)</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item reveal">
+                    <span class="stat-number" data-target="200">0</span>
+                    <div class="stat-label">Partner Companies</div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="stat-item reveal">
+                    <span class="stat-number" data-target="50">0</span>
+                    <div class="stat-label">Expert Trainers</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer" id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="reveal">
+                    <h3>EduCareer Pro</h3>
+                    <p style="color: var(--text-secondary);">Transforming lives through innovative education technology
+                        and strategic career guidance. Your success is our mission.</p>
+                    <div class="mt-3">
+                        <p class="mb-1" style="color: var(--glow-green);">📍 Jamshedpur, Jharkhand, India</p>
+                        <p style="color: var(--glow-green);">🌍 Serving Students Globally</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="reveal">
+                    <h3>Quick Links</h3>
+                    <a href="#about">About Us</a>
+                    <a href="#services">Our Services</a>
+                    <a href="#team">Leadership Team</a>
+                    <a href="#reviews">Student Reviews</a>
+                    <a href="#courses">Courses</a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="reveal">
+                    <h3>Programs</h3>
+                    <a href="#courses">Full Stack Development</a>
+                    <a href="#courses">Data Science & ML</a>
+                    <a href="#courses">Cybersecurity</a>
+                    <a href="#courses">Digital Marketing</a>
+                    <a href="#courses">Cloud Computing</a>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+                <div class="reveal">
+                    <h3>Contact Info</h3>
+                    <p style="color: var(--text-secondary);">📍 Jamshedpur, Jharkhand, India</p>
+                    <p style="color: var(--text-secondary);">📞 +91-XXX-XXX-XXXX</p>
+                    <p style="color: var(--text
